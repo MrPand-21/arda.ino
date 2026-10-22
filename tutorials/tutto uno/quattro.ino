@@ -5,7 +5,7 @@
 // and change the setting in ten steps. 
 // Report errors and prevent movement beyond the limits.
 
-const int FAN_STEPS = 10;
+const int FAN_STEPS = 100;
 const int FAN_PIN = 8;
 
 int speedStart = 0;
