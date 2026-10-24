@@ -7,7 +7,7 @@ const int RED_PIN = 2;
 const int GREEN_PIN = 3;
 
 const unsigned long RED_INTERVAL_MS = 1500;
-const unsigned long GREEN_INTERNAL_MS = 2000;
+const unsigned long GREEN_INTERNAL_MS = 3500;
 
 unsigned long lastRed = 0;
 unsigned long lastGreen = 0;

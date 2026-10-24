@@ -4,14 +4,14 @@
 
 // | Output | OFF | Gradually increases | Fully ON |
 // | Fan | At or below 25°C | From 25°C to 30°C | At or above 30°C |
-// | Heater LED | At or above 20°C | As temperature falls from 20°C to 15°C | At or below 15°C |
+// | Heater | At or above 20°C | As temperature falls from 20°C to 15°C | At or below 15°C |
 
 // NOTE: we use LSM6DSOX IMU instead of analog read (see @tutto uno/cinque.ino)
 
 #include <Arduino_LSM6DSOX.h>
 
 const int FAN_PIN = 9;
-const int HEATER_PIN = 2;  // External red LED.
+const int HEATER_PIN = 2;  // External red led.
 
 const float FAN_START = 25.0;
 const float FAN_FULL = 30.0;
@@ -25,6 +25,8 @@ unsigned long lastSample = 0;
 void controlTemperature(float temperature){
     int fanPWM = 0;
     int heaterPWM = 0;
+    float percentageTemp = 0.0;
+
     if (temperature >= FAN_FULL) {
         fanPWM = 255;
     }
@@ -35,10 +37,10 @@ void controlTemperature(float temperature){
         fanPWM = 0;
     }
 
-    if(temperature >= HEATER_FULL){
+    if(temperature >= HEATER_START){
         heaterPWM = 0;
     }
-    else if(temperature > HEATER_START){
+    else if(temperature > HEATER_FULL){
         percentageTemp = (HEATER_START - temperature) / (HEATER_START-HEATER_FULL);
         heaterPWM = percentageTemp * 255;
     }
@@ -72,7 +74,7 @@ void loop(){
         lastSample = now;
 
         if (IMU.temperatureAvailable()) {
-            int temperature = 0;
+            float temperature = 0.0;
 
             if (IMU.readTemperature(temperature)) {
                 controlTemperature(temperature);

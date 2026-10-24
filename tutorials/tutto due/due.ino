@@ -27,6 +27,8 @@ void setup(){
     digitalWrite(PRESENCE_LED_PIN, LOW);
     Serial.begin(9600);
 
+    while(!Serial){};
+
     attachInterrupt(
         digitalPinToInterrupt(PIR_PIN),
         onMotion,
