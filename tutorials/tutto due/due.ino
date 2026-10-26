@@ -6,15 +6,16 @@
 // motionDetected	Has the ISR reported a new detection?
 // lastMotion	When did we last process a detection?
 // pirPresence	Does the system currently consider the room occupied?
+// pir presence = 30 mins since last motion
 
-const int PIR_PIN = 2;
+const int PIR_PIN = 2; //zıkkım
 const int PRESENCE_LED_PIN = 7;
 
 const unsigned long PIR_TIMEOUT_MS = 30UL * 60UL * 1000UL; //30dk
+unsigned long lastMotion = 0;
 
 volatile bool motionDetected = false;
 bool pirPresence = false;
-unsigned long lastMotion = 0;
 
 void onMotion(){
       motionDetected = true;
@@ -57,7 +58,7 @@ void loop(){
         pirPresence = false;
     }
 
-    digitalWrite( PRESENCE_LED_PIN,pirPresence ? HIGH : LOW);
+    digitalWrite(PRESENCE_LED_PIN ,pirPresence ? HIGH : LOW);
 
     if (pirPresence != previousPresence) {
         Serial.println(

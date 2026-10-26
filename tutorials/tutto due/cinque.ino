@@ -87,6 +87,9 @@ void updateOutputs(const SetPoints& active) {
       nextFanPWM = (temperatureC - active.fanStart) * 255.0 /
                    (active.fanFull - active.fanStart);
     }
+    else{
+      nextFanPWM = 0;
+    }
   }
   // PWM hardware keeps running; only write again when a value changes.
   if (nextFanPWM != fanPWM) {
